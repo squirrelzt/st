@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 配置生成器 -->
+<generatorConfiguration>
+        <!-- 数据库驱动包位置 -->
+        <!-- <classPathEntry location="D:\mysql-jar\mysql-connector-java-5.1.35.jar" /> -->
+        <context id="mysql" targetRuntime="MyBatis3" defaultModelType="flat">
+            <!-- 为了防止生成的代码中有很多注释，比较难看，加入下面的配置控制 -->
+            <commentGenerator>
+                <property name="suppressAllComments" value="true" />
+                <property name="suppressDate" value="true"/>
+            </commentGenerator>
+            <!-- 必须要有的，使用这个配置链接数据库,url、密码等 -->
+            <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                            connectionURL="jdbc:mysql://10.144.137.22:3306/gold_goods_check"
+                            userId="dev_gg" password="Sino@1234">
+                <!-- 这里面可以设置property属性，每一个property属性都设置到配置的Driver上 -->
+                <property name="useUnicode" value="true"/>
+                <property name="characterEncoding" value="UTF-8"/>
+            </jdbcConnection>
+
+            <javaTypeResolver>
+                <property name="forceBigDecimals" value="false"/>
+            </javaTypeResolver>
+
+            <javaModelGenerator targetPackage="com.squirrel.st.domain" targetProject="src/main/java">
+                <!-- <property name="constructorBased" value="false"/> -->
+                <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+                <property name="enableSubPackages" value="true" />
+                <!-- for MyBatis3 / MyBatis3Simple
+                    是否创建一个不可变的类，如果为true，
+                    那么MBG会创建一个没有setter方法的类，取而代之的是类似constructorBased的类
+                 -->
+                <property name="immutable" value="false"/>
+                <!-- 设置是否在getter方法中，对String类型字段调用trim()方法 -->
+                <property name="trimStrings" value="true"/>
+            </javaModelGenerator>
+
+            <!--
+                生成SQL map的XML文件生成器，
+                注意，在Mybatis3之后，我们可以使用mapper.xml文件+Mapper接口（或者不用mapper接口），
+                    或者只使用Mapper接口+Annotation，所以，如果 javaClientGenerator配置中配置了需要生成XML的话，这个元素就必须配置
+                    targetPackage/targetProject:同javaModelGenerator
+            -->
+            <sqlMapGenerator targetPackage="com.squirrel.st.mapper" targetProject="src/main/resources">
+                <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+                <property name="enableSubPackages" value="true"/>
+            </sqlMapGenerator>
+
+            <!-- mapper包名和位置 -->
+            <javaClientGenerator type="XMLMAPPER" targetPackage="com.squirrel.st.mapper" targetProject="src/main/java">
+                <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
+                <property name="enableSubPackages" value="true"/>
+            </javaClientGenerator>
+
+            <!-- 表配置 -->
+            <!--<table schema="gold_goods_check" tableName="bill_bank_balance" domainObjectName="BillBankBalance" >-->
+                <!--&lt;!&ndash; 参考 javaModelGenerator 的 constructorBased属性&ndash;&gt;-->
+                <!--<property name="constructorBased" value="false"/>-->
+                <!--&lt;!&ndash; 默认为false，如果设置为true，在生成的SQL中，table名字不会加上catalog或schema； &ndash;&gt;-->
+                <!--<property name="ignoreQualifiersAtRuntime" value="false"/>-->
+                <!--&lt;!&ndash; 指定是否只生成domain类，如果设置为true，只生成domain类，如果还配置了sqlMapGenerator，那么在mapper XML文件中，只生成resultMap元素 &ndash;&gt;-->
+                <!--<property name="modelOnly" value="false"/>-->
+                <!--&lt;!&ndash; 如果设置为true，生成的model类会直接使用column本身的名字，而不会再使用驼峰命名方法，比如BORN_DATE，生成的属性名字就是BORN_DATE,而不会是bornDate &ndash;&gt;-->
+                <!--<property name="useActualColumnNames" value="false"/>-->
+            <!--</table>-->
+            <table schema="gold_goods_check" tableName="acps_acct_mast" domainObjectName="AcpsAcctMast">
+                <property name="useActualColumnNames" value="false"/>
+            </table>
+
+        </context>
+</generatorConfiguration>

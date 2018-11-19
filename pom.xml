@@ -6,6 +6,9 @@
 	<groupId>com.squirrel</groupId>
 	<artifactId>st</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<modules>
+		<module>mybatis-generator</module>
+	</modules>
 	<packaging>pom</packaging>
 
 	<name>st</name>
@@ -83,10 +86,10 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
-			<resource>
-				<directory>deploy/${env.name}</directory>
-				<filtering>true</filtering>
-			</resource>
+			<!--<resource>-->
+				<!--<directory>deploy/${env.name}</directory>-->
+				<!--<filtering>true</filtering>-->
+			<!--</resource>-->
 		</resources>
 		<plugins>
 			<plugin>

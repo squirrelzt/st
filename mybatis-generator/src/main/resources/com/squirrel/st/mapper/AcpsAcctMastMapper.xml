@@ -1,0 +1,842 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.squirrel.st.mapper.AcpsAcctMastMapper">
+  <resultMap id="BaseResultMap" type="com.squirrel.st.domain.AcpsAcctMast">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="bank_acct_id" jdbcType="VARCHAR" property="bankAcctId" />
+    <result column="acct_type" jdbcType="INTEGER" property="acctType" />
+    <result column="mast_acct_num" jdbcType="VARCHAR" property="mastAcctNum" />
+    <result column="platform" jdbcType="VARCHAR" property="platform" />
+    <result column="channel" jdbcType="VARCHAR" property="channel" />
+    <result column="cust_id" jdbcType="BIGINT" property="custId" />
+    <result column="mer_cust_id" jdbcType="VARCHAR" property="merCustId" />
+    <result column="mer_code" jdbcType="VARCHAR" property="merCode" />
+    <result column="mer_cust_name" jdbcType="VARCHAR" property="merCustName" />
+    <result column="total_balance" jdbcType="DECIMAL" property="totalBalance" />
+    <result column="available_balance" jdbcType="DECIMAL" property="availableBalance" />
+    <result column="available_draw_balance" jdbcType="DECIMAL" property="availableDrawBalance" />
+    <result column="frozen_balance" jdbcType="DECIMAL" property="frozenBalance" />
+    <result column="pending_payment_balance" jdbcType="DECIMAL" property="pendingPaymentBalance" />
+    <result column="pre_minus_amt" jdbcType="DECIMAL" property="preMinusAmt" />
+    <result column="total_mod_count" jdbcType="INTEGER" property="totalModCount" />
+    <result column="cum_dr_amt" jdbcType="DECIMAL" property="cumDrAmt" />
+    <result column="cum_cr_amt" jdbcType="DECIMAL" property="cumCrAmt" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="opt_id" jdbcType="BIGINT" property="optId" />
+    <result column="last_user_id" jdbcType="VARCHAR" property="lastUserId" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, bank_acct_id, acct_type, mast_acct_num, platform, channel, cust_id, mer_cust_id, 
+    mer_code, mer_cust_name, total_balance, available_balance, available_draw_balance, 
+    frozen_balance, pending_payment_balance, pre_minus_amt, total_mod_count, cum_dr_amt, 
+    cum_cr_amt, status, create_time, update_time, opt_id, last_user_id, last_time, mobile
+  </sql>
+  <select id="selectByExample" parameterType="com.squirrel.st.domain.AcpsAcctMastExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from acps_acct_mast
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.squirrel.st.domain.AcpsAcctMastExample">
+    delete from acps_acct_mast
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.squirrel.st.domain.AcpsAcctMast">
+    insert into acps_acct_mast (id, bank_acct_id, acct_type, 
+      mast_acct_num, platform, channel, 
+      cust_id, mer_cust_id, mer_code, 
+      mer_cust_name, total_balance, available_balance, 
+      available_draw_balance, frozen_balance, pending_payment_balance, 
+      pre_minus_amt, total_mod_count, cum_dr_amt, 
+      cum_cr_amt, status, create_time, 
+      update_time, opt_id, last_user_id, 
+      last_time, mobile)
+    values (#{id,jdbcType=BIGINT}, #{bankAcctId,jdbcType=VARCHAR}, #{acctType,jdbcType=INTEGER}, 
+      #{mastAcctNum,jdbcType=VARCHAR}, #{platform,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=BIGINT}, #{merCustId,jdbcType=VARCHAR}, #{merCode,jdbcType=VARCHAR}, 
+      #{merCustName,jdbcType=VARCHAR}, #{totalBalance,jdbcType=DECIMAL}, #{availableBalance,jdbcType=DECIMAL}, 
+      #{availableDrawBalance,jdbcType=DECIMAL}, #{frozenBalance,jdbcType=DECIMAL}, #{pendingPaymentBalance,jdbcType=DECIMAL}, 
+      #{preMinusAmt,jdbcType=DECIMAL}, #{totalModCount,jdbcType=INTEGER}, #{cumDrAmt,jdbcType=DECIMAL}, 
+      #{cumCrAmt,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{optId,jdbcType=BIGINT}, #{lastUserId,jdbcType=VARCHAR}, 
+      #{lastTime,jdbcType=TIMESTAMP}, #{mobile,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.squirrel.st.domain.AcpsAcctMast">
+    insert into acps_acct_mast
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bankAcctId != null">
+        bank_acct_id,
+      </if>
+      <if test="acctType != null">
+        acct_type,
+      </if>
+      <if test="mastAcctNum != null">
+        mast_acct_num,
+      </if>
+      <if test="platform != null">
+        platform,
+      </if>
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="custId != null">
+        cust_id,
+      </if>
+      <if test="merCustId != null">
+        mer_cust_id,
+      </if>
+      <if test="merCode != null">
+        mer_code,
+      </if>
+      <if test="merCustName != null">
+        mer_cust_name,
+      </if>
+      <if test="totalBalance != null">
+        total_balance,
+      </if>
+      <if test="availableBalance != null">
+        available_balance,
+      </if>
+      <if test="availableDrawBalance != null">
+        available_draw_balance,
+      </if>
+      <if test="frozenBalance != null">
+        frozen_balance,
+      </if>
+      <if test="pendingPaymentBalance != null">
+        pending_payment_balance,
+      </if>
+      <if test="preMinusAmt != null">
+        pre_minus_amt,
+      </if>
+      <if test="totalModCount != null">
+        total_mod_count,
+      </if>
+      <if test="cumDrAmt != null">
+        cum_dr_amt,
+      </if>
+      <if test="cumCrAmt != null">
+        cum_cr_amt,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="optId != null">
+        opt_id,
+      </if>
+      <if test="lastUserId != null">
+        last_user_id,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bankAcctId != null">
+        #{bankAcctId,jdbcType=VARCHAR},
+      </if>
+      <if test="acctType != null">
+        #{acctType,jdbcType=INTEGER},
+      </if>
+      <if test="mastAcctNum != null">
+        #{mastAcctNum,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="merCustId != null">
+        #{merCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="merCode != null">
+        #{merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merCustName != null">
+        #{merCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalBalance != null">
+        #{totalBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="availableBalance != null">
+        #{availableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="availableDrawBalance != null">
+        #{availableDrawBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="frozenBalance != null">
+        #{frozenBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="pendingPaymentBalance != null">
+        #{pendingPaymentBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="preMinusAmt != null">
+        #{preMinusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="totalModCount != null">
+        #{totalModCount,jdbcType=INTEGER},
+      </if>
+      <if test="cumDrAmt != null">
+        #{cumDrAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="cumCrAmt != null">
+        #{cumCrAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optId != null">
+        #{optId,jdbcType=BIGINT},
+      </if>
+      <if test="lastUserId != null">
+        #{lastUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.squirrel.st.domain.AcpsAcctMastExample" resultType="java.lang.Long">
+    select count(*) from acps_acct_mast
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update acps_acct_mast
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.bankAcctId != null">
+        bank_acct_id = #{record.bankAcctId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acctType != null">
+        acct_type = #{record.acctType,jdbcType=INTEGER},
+      </if>
+      <if test="record.mastAcctNum != null">
+        mast_acct_num = #{record.mastAcctNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platform != null">
+        platform = #{record.platform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null">
+        channel = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null">
+        cust_id = #{record.custId,jdbcType=BIGINT},
+      </if>
+      <if test="record.merCustId != null">
+        mer_cust_id = #{record.merCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merCode != null">
+        mer_code = #{record.merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merCustName != null">
+        mer_cust_name = #{record.merCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalBalance != null">
+        total_balance = #{record.totalBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.availableBalance != null">
+        available_balance = #{record.availableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.availableDrawBalance != null">
+        available_draw_balance = #{record.availableDrawBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.frozenBalance != null">
+        frozen_balance = #{record.frozenBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pendingPaymentBalance != null">
+        pending_payment_balance = #{record.pendingPaymentBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.preMinusAmt != null">
+        pre_minus_amt = #{record.preMinusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalModCount != null">
+        total_mod_count = #{record.totalModCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.cumDrAmt != null">
+        cum_dr_amt = #{record.cumDrAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cumCrAmt != null">
+        cum_cr_amt = #{record.cumCrAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.optId != null">
+        opt_id = #{record.optId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastUserId != null">
+        last_user_id = #{record.lastUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastTime != null">
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update acps_acct_mast
+    set id = #{record.id,jdbcType=BIGINT},
+      bank_acct_id = #{record.bankAcctId,jdbcType=VARCHAR},
+      acct_type = #{record.acctType,jdbcType=INTEGER},
+      mast_acct_num = #{record.mastAcctNum,jdbcType=VARCHAR},
+      platform = #{record.platform,jdbcType=VARCHAR},
+      channel = #{record.channel,jdbcType=VARCHAR},
+      cust_id = #{record.custId,jdbcType=BIGINT},
+      mer_cust_id = #{record.merCustId,jdbcType=VARCHAR},
+      mer_code = #{record.merCode,jdbcType=VARCHAR},
+      mer_cust_name = #{record.merCustName,jdbcType=VARCHAR},
+      total_balance = #{record.totalBalance,jdbcType=DECIMAL},
+      available_balance = #{record.availableBalance,jdbcType=DECIMAL},
+      available_draw_balance = #{record.availableDrawBalance,jdbcType=DECIMAL},
+      frozen_balance = #{record.frozenBalance,jdbcType=DECIMAL},
+      pending_payment_balance = #{record.pendingPaymentBalance,jdbcType=DECIMAL},
+      pre_minus_amt = #{record.preMinusAmt,jdbcType=DECIMAL},
+      total_mod_count = #{record.totalModCount,jdbcType=INTEGER},
+      cum_dr_amt = #{record.cumDrAmt,jdbcType=DECIMAL},
+      cum_cr_amt = #{record.cumCrAmt,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      opt_id = #{record.optId,jdbcType=BIGINT},
+      last_user_id = #{record.lastUserId,jdbcType=VARCHAR},
+      last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      mobile = #{record.mobile,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <resultMap id="BaseResultMap" type="com.squirrel.st.domain.AcpsAcctMast">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="bank_acct_id" jdbcType="VARCHAR" property="bankAcctId" />
+    <result column="acct_type" jdbcType="INTEGER" property="acctType" />
+    <result column="mast_acct_num" jdbcType="VARCHAR" property="mastAcctNum" />
+    <result column="platform" jdbcType="VARCHAR" property="platform" />
+    <result column="channel" jdbcType="VARCHAR" property="channel" />
+    <result column="cust_id" jdbcType="BIGINT" property="custId" />
+    <result column="mer_cust_id" jdbcType="VARCHAR" property="merCustId" />
+    <result column="mer_code" jdbcType="VARCHAR" property="merCode" />
+    <result column="mer_cust_name" jdbcType="VARCHAR" property="merCustName" />
+    <result column="total_balance" jdbcType="DECIMAL" property="totalBalance" />
+    <result column="available_balance" jdbcType="DECIMAL" property="availableBalance" />
+    <result column="available_draw_balance" jdbcType="DECIMAL" property="availableDrawBalance" />
+    <result column="frozen_balance" jdbcType="DECIMAL" property="frozenBalance" />
+    <result column="pending_payment_balance" jdbcType="DECIMAL" property="pendingPaymentBalance" />
+    <result column="pre_minus_amt" jdbcType="DECIMAL" property="preMinusAmt" />
+    <result column="total_mod_count" jdbcType="INTEGER" property="totalModCount" />
+    <result column="cum_dr_amt" jdbcType="DECIMAL" property="cumDrAmt" />
+    <result column="cum_cr_amt" jdbcType="DECIMAL" property="cumCrAmt" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="opt_id" jdbcType="BIGINT" property="optId" />
+    <result column="last_user_id" jdbcType="VARCHAR" property="lastUserId" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, bank_acct_id, acct_type, mast_acct_num, platform, channel, cust_id, mer_cust_id, 
+    mer_code, mer_cust_name, total_balance, available_balance, available_draw_balance, 
+    frozen_balance, pending_payment_balance, pre_minus_amt, total_mod_count, cum_dr_amt, 
+    cum_cr_amt, status, create_time, update_time, opt_id, last_user_id, last_time, mobile
+  </sql>
+  <select id="selectByExample" parameterType="com.squirrel.st.domain.AcpsAcctMastExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from acps_acct_mast
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.squirrel.st.domain.AcpsAcctMastExample">
+    delete from acps_acct_mast
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.squirrel.st.domain.AcpsAcctMast">
+    insert into acps_acct_mast (id, bank_acct_id, acct_type, 
+      mast_acct_num, platform, channel, 
+      cust_id, mer_cust_id, mer_code, 
+      mer_cust_name, total_balance, available_balance, 
+      available_draw_balance, frozen_balance, pending_payment_balance, 
+      pre_minus_amt, total_mod_count, cum_dr_amt, 
+      cum_cr_amt, status, create_time, 
+      update_time, opt_id, last_user_id, 
+      last_time, mobile)
+    values (#{id,jdbcType=BIGINT}, #{bankAcctId,jdbcType=VARCHAR}, #{acctType,jdbcType=INTEGER}, 
+      #{mastAcctNum,jdbcType=VARCHAR}, #{platform,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, 
+      #{custId,jdbcType=BIGINT}, #{merCustId,jdbcType=VARCHAR}, #{merCode,jdbcType=VARCHAR}, 
+      #{merCustName,jdbcType=VARCHAR}, #{totalBalance,jdbcType=DECIMAL}, #{availableBalance,jdbcType=DECIMAL}, 
+      #{availableDrawBalance,jdbcType=DECIMAL}, #{frozenBalance,jdbcType=DECIMAL}, #{pendingPaymentBalance,jdbcType=DECIMAL}, 
+      #{preMinusAmt,jdbcType=DECIMAL}, #{totalModCount,jdbcType=INTEGER}, #{cumDrAmt,jdbcType=DECIMAL}, 
+      #{cumCrAmt,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{optId,jdbcType=BIGINT}, #{lastUserId,jdbcType=VARCHAR}, 
+      #{lastTime,jdbcType=TIMESTAMP}, #{mobile,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.squirrel.st.domain.AcpsAcctMast">
+    insert into acps_acct_mast
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bankAcctId != null">
+        bank_acct_id,
+      </if>
+      <if test="acctType != null">
+        acct_type,
+      </if>
+      <if test="mastAcctNum != null">
+        mast_acct_num,
+      </if>
+      <if test="platform != null">
+        platform,
+      </if>
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="custId != null">
+        cust_id,
+      </if>
+      <if test="merCustId != null">
+        mer_cust_id,
+      </if>
+      <if test="merCode != null">
+        mer_code,
+      </if>
+      <if test="merCustName != null">
+        mer_cust_name,
+      </if>
+      <if test="totalBalance != null">
+        total_balance,
+      </if>
+      <if test="availableBalance != null">
+        available_balance,
+      </if>
+      <if test="availableDrawBalance != null">
+        available_draw_balance,
+      </if>
+      <if test="frozenBalance != null">
+        frozen_balance,
+      </if>
+      <if test="pendingPaymentBalance != null">
+        pending_payment_balance,
+      </if>
+      <if test="preMinusAmt != null">
+        pre_minus_amt,
+      </if>
+      <if test="totalModCount != null">
+        total_mod_count,
+      </if>
+      <if test="cumDrAmt != null">
+        cum_dr_amt,
+      </if>
+      <if test="cumCrAmt != null">
+        cum_cr_amt,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="optId != null">
+        opt_id,
+      </if>
+      <if test="lastUserId != null">
+        last_user_id,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bankAcctId != null">
+        #{bankAcctId,jdbcType=VARCHAR},
+      </if>
+      <if test="acctType != null">
+        #{acctType,jdbcType=INTEGER},
+      </if>
+      <if test="mastAcctNum != null">
+        #{mastAcctNum,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null">
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="merCustId != null">
+        #{merCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="merCode != null">
+        #{merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merCustName != null">
+        #{merCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalBalance != null">
+        #{totalBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="availableBalance != null">
+        #{availableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="availableDrawBalance != null">
+        #{availableDrawBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="frozenBalance != null">
+        #{frozenBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="pendingPaymentBalance != null">
+        #{pendingPaymentBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="preMinusAmt != null">
+        #{preMinusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="totalModCount != null">
+        #{totalModCount,jdbcType=INTEGER},
+      </if>
+      <if test="cumDrAmt != null">
+        #{cumDrAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="cumCrAmt != null">
+        #{cumCrAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optId != null">
+        #{optId,jdbcType=BIGINT},
+      </if>
+      <if test="lastUserId != null">
+        #{lastUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.squirrel.st.domain.AcpsAcctMastExample" resultType="java.lang.Long">
+    select count(*) from acps_acct_mast
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update acps_acct_mast
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.bankAcctId != null">
+        bank_acct_id = #{record.bankAcctId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acctType != null">
+        acct_type = #{record.acctType,jdbcType=INTEGER},
+      </if>
+      <if test="record.mastAcctNum != null">
+        mast_acct_num = #{record.mastAcctNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platform != null">
+        platform = #{record.platform,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null">
+        channel = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custId != null">
+        cust_id = #{record.custId,jdbcType=BIGINT},
+      </if>
+      <if test="record.merCustId != null">
+        mer_cust_id = #{record.merCustId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merCode != null">
+        mer_code = #{record.merCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merCustName != null">
+        mer_cust_name = #{record.merCustName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalBalance != null">
+        total_balance = #{record.totalBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.availableBalance != null">
+        available_balance = #{record.availableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.availableDrawBalance != null">
+        available_draw_balance = #{record.availableDrawBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.frozenBalance != null">
+        frozen_balance = #{record.frozenBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pendingPaymentBalance != null">
+        pending_payment_balance = #{record.pendingPaymentBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.preMinusAmt != null">
+        pre_minus_amt = #{record.preMinusAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalModCount != null">
+        total_mod_count = #{record.totalModCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.cumDrAmt != null">
+        cum_dr_amt = #{record.cumDrAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cumCrAmt != null">
+        cum_cr_amt = #{record.cumCrAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.optId != null">
+        opt_id = #{record.optId,jdbcType=BIGINT},
+      </if>
+      <if test="record.lastUserId != null">
+        last_user_id = #{record.lastUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastTime != null">
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update acps_acct_mast
+    set id = #{record.id,jdbcType=BIGINT},
+      bank_acct_id = #{record.bankAcctId,jdbcType=VARCHAR},
+      acct_type = #{record.acctType,jdbcType=INTEGER},
+      mast_acct_num = #{record.mastAcctNum,jdbcType=VARCHAR},
+      platform = #{record.platform,jdbcType=VARCHAR},
+      channel = #{record.channel,jdbcType=VARCHAR},
+      cust_id = #{record.custId,jdbcType=BIGINT},
+      mer_cust_id = #{record.merCustId,jdbcType=VARCHAR},
+      mer_code = #{record.merCode,jdbcType=VARCHAR},
+      mer_cust_name = #{record.merCustName,jdbcType=VARCHAR},
+      total_balance = #{record.totalBalance,jdbcType=DECIMAL},
+      available_balance = #{record.availableBalance,jdbcType=DECIMAL},
+      available_draw_balance = #{record.availableDrawBalance,jdbcType=DECIMAL},
+      frozen_balance = #{record.frozenBalance,jdbcType=DECIMAL},
+      pending_payment_balance = #{record.pendingPaymentBalance,jdbcType=DECIMAL},
+      pre_minus_amt = #{record.preMinusAmt,jdbcType=DECIMAL},
+      total_mod_count = #{record.totalModCount,jdbcType=INTEGER},
+      cum_dr_amt = #{record.cumDrAmt,jdbcType=DECIMAL},
+      cum_cr_amt = #{record.cumCrAmt,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      opt_id = #{record.optId,jdbcType=BIGINT},
+      last_user_id = #{record.lastUserId,jdbcType=VARCHAR},
+      last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      mobile = #{record.mobile,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
