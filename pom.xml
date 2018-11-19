@@ -86,10 +86,10 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
-			<!--<resource>-->
-				<!--<directory>deploy/${env.name}</directory>-->
-				<!--<filtering>true</filtering>-->
-			<!--</resource>-->
+			<resource>
+				<directory>deploy/${env.name}</directory>
+				<filtering>true</filtering>
+			</resource>
 		</resources>
 		<plugins>
 			<plugin>
