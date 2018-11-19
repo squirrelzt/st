@@ -8,7 +8,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
 		<module>mybatis-generator</module>
-	</modules>
+        <module>annotation</module>
+    </modules>
 	<packaging>pom</packaging>
 
 	<name>st</name>
@@ -81,6 +82,7 @@
 	</dependencies>
 
 	<build>
+        <finalName>${project.artifactId}</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
