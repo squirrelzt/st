@@ -10,6 +10,7 @@
 		<module>mybatis-generator</module>
         <module>annotation</module>
 		<module>application-context</module>
+		<module>actuator</module>
 	</modules>
 	<packaging>pom</packaging>
 
