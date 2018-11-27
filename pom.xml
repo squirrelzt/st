@@ -9,7 +9,8 @@
 	<modules>
 		<module>mybatis-generator</module>
         <module>annotation</module>
-    </modules>
+		<module>application-context</module>
+	</modules>
 	<packaging>pom</packaging>
 
 	<name>st</name>
