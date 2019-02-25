@@ -11,7 +11,8 @@
         <module>annotation</module>
 		<module>application-context</module>
 		<module>actuator</module>
-	</modules>
+        <module>file-operation</module>
+    </modules>
 	<packaging>pom</packaging>
 
 	<name>st</name>
