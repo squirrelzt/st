@@ -21,7 +21,15 @@ spring:
       connection-test-query: SELECT 1
       validation-timeout: 1000
       isolate-internal-queries: true
+#设置最大可上传文件大小
+  servlet:
+      multipart:
+        max-file-size: 1000MB
+        max-request-size: 1000MB
 
 download:
    pdf-path: C:/Users/admin/Desktop/doc/Java_manual.pdf
    excel-path: C:/Users/admin/Desktop/doc/csv/train.xlsx
+
+upload:
+   upload-path: C:/Users/admin/Desktop/doc/server

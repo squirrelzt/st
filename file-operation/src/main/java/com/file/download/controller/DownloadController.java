@@ -1,6 +1,5 @@
-package com.file.download;
+package com.file.download.controller;
 
-import com.common.FileResponse;
 import com.file.download.service.DownloadService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
