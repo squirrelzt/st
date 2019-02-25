@@ -1,11 +1,13 @@
 package com.file.download;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.common.FileResponse;
+import com.file.download.service.DownloadService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.IOException;
 
 /**
  * 类名称: DownloadController
@@ -13,29 +15,31 @@ import java.io.*;
  * @author squirrel
  * @date 2019-02-25
  */
+@Slf4j
 @RestController
 public class DownloadController {
 
-    @Value("${download.pdf-path}")
-    private String pdfPath;
+    private final DownloadService downloadService;
 
-    @RequestMapping("/download")
-    public void download(HttpServletResponse response) {
-//        File file = new File("/doc/Java_manual.pdf");
-        File file = new File(pdfPath);
-        byte[] buffer = new byte[1024];
-        try (InputStream in = new FileInputStream(file); OutputStream out = response.getOutputStream()) {
-            response.setHeader("Content-Type","application/octet-stream");
-            response.setHeader("Content-Disposition", "attachment; filename=" +
-                    new String(file.getName().getBytes("ISO-8859-1"), "UTF-8"));
-            int length = in.read(buffer);
-            while (length != -1) {
-                out.write(buffer, 0, length);
-                length = in.read(buffer);
-            }
-            response.flushBuffer();
+    public DownloadController(DownloadService downloadService) {
+        this.downloadService = downloadService;
+    }
+
+    @RequestMapping("/download/ftp")
+    public void downloadFtp(HttpServletResponse response) {
+        try {
+            downloadService.ftpDownload(response);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage());
+        }
+    }
+
+    @RequestMapping("/download/excel")
+    public void downloadXlsx(HttpServletResponse response) {
+        try {
+            downloadService.csvDownload(response);
+        } catch (IOException e) {
+            LOGGER.error(e.getMessage());
         }
     }
 }

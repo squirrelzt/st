@@ -24,3 +24,4 @@ spring:
 
 download:
    pdf-path: C:/Users/admin/Desktop/doc/Java_manual.pdf
+   excel-path: C:/Users/admin/Desktop/doc/csv/train.xlsx
