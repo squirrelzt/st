@@ -16,6 +16,7 @@ import java.io.IOException;
  */
 @Slf4j
 @RestController
+@RequestMapping("/download")
 public class DownloadController {
 
     private final DownloadService downloadService;
@@ -24,19 +25,14 @@ public class DownloadController {
         this.downloadService = downloadService;
     }
 
-    @RequestMapping("/download/ftp")
-    public void downloadFtp(HttpServletResponse response) {
+    /**
+     * 文件类型数据下载(txt,pdf,png,jpg,xlsx,xls,csv)
+     * @param response {@link HttpServletResponse}
+     */
+    @RequestMapping("/file")
+    public void downloadFile(HttpServletResponse response) {
         try {
-            downloadService.ftpDownload(response);
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage());
-        }
-    }
-
-    @RequestMapping("/download/excel")
-    public void downloadXlsx(HttpServletResponse response) {
-        try {
-            downloadService.csvDownload(response);
+            downloadService.downloadFile(response);
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
         }

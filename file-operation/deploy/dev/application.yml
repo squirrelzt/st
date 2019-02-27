@@ -28,8 +28,7 @@ spring:
         max-request-size: 1000MB
 
 download:
-   pdf-path: C:/Users/admin/Desktop/doc/Java_manual.pdf
-   excel-path: C:/Users/admin/Desktop/doc/csv/train.xlsx
+   file-path: C:/Users/admin/Desktop/doc/csv/hello.csv
 
 upload:
    upload-path: C:/Users/admin/Desktop/doc/server

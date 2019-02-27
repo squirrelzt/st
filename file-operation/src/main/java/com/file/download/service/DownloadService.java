@@ -11,8 +11,10 @@ import java.io.IOException;
  */
 public interface DownloadService {
 
-
-    void ftpDownload(HttpServletResponse response) throws IOException;
-
-    void csvDownload(HttpServletResponse response) throws IOException;
+    /**
+     * 文件类型数据下载(txt,pdf,png,jpg)
+     * @param response {@link HttpServletResponse}
+     * @throws IOException 抛出异常
+     */
+    void downloadFile(HttpServletResponse response) throws IOException;
 }
