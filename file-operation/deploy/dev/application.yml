@@ -28,7 +28,6 @@ spring:
         max-request-size: 1000MB
 
 download:
-   file-path: C:/Users/admin/Desktop/doc/csv/hello.csv
-
+  file-path: file-operation/download-file/images/zuul.png
 upload:
-   upload-path: C:/Users/admin/Desktop/doc/server
+   upload-path: file-operation/upload-file/images

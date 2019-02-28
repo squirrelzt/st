@@ -4,6 +4,7 @@ import com.file.upload.service.UploadService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -21,14 +22,15 @@ public class UploadServiceImpl implements UploadService {
     private String uploadPath;
 
     @Override
-    public void upload(MultipartFile file) {
+    public void upload(MultipartFile file) throws IOException {
         String filename = file.getOriginalFilename();
-        String path = uploadPath + File.separator + filename;
+        String path = ResourceUtils.getURL("").getPath() + File.separator + uploadPath + File.separator + filename;
         File dest = new File(path);
         try {
             file.transferTo(dest);
         } catch (IOException e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error("" + e);
+            throw new IOException(e);
         }
 
     }

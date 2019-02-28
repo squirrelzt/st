@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 /**
  * @author squirrel
  * @date 2019-02-25
@@ -21,7 +23,11 @@ public class UploadController {
 
     @RequestMapping("/upload")
     public String upload(@RequestParam("file") MultipartFile file) {
-        uploadService.upload(file);
-        return "upload success";
+        try {
+            uploadService.upload(file);
+            return "upload success";
+        } catch (IOException e) {
+            return e.getMessage();
+        }
     }
 }

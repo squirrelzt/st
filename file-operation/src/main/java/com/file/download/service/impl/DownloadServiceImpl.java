@@ -4,6 +4,7 @@ import com.file.download.service.DownloadService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -28,7 +29,7 @@ public class DownloadServiceImpl implements DownloadService {
      */
     @Override
     public void downloadFile(HttpServletResponse response) throws IOException {
-        File file = new File(filePath);
+        File file = new File(ResourceUtils.getURL("").getPath() + File.separator + filePath);
         byte[] buffer = new byte[1024];
         try (InputStream in = new FileInputStream(file); OutputStream out = response.getOutputStream()) {
             response.setHeader("Content-Type","application/octet-stream");
