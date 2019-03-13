@@ -1,12 +1,14 @@
 package com.annotation.controller;
 
 import com.annotation.main.AnnotationApplicationMain;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -38,7 +40,10 @@ public class ArrayParamControllerTest {
                 .param("names", "tom,jack,kate");
         try {
             MvcResult mvcResult = mockMvc.perform(builders).andReturn();
-            System.out.println(mvcResult.getResponse());
+            MockHttpServletResponse response = mvcResult.getResponse();
+            Assert.assertEquals(200, response.getStatus());
+            Assert.assertEquals("[\"tom\",\"jack\",\"kate\"]", response.getContentAsString());
+            Assert.assertEquals("1111111", response.getContentAsString());
         } catch (Exception e) {
             e.printStackTrace();
         }
