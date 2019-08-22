@@ -12,6 +12,7 @@
 		<module>application-context</module>
 		<module>actuator</module>
         <module>file-operation</module>
+        <module>excel</module>
     </modules>
 	<packaging>pom</packaging>
 

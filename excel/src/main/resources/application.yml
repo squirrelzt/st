@@ -21,6 +21,13 @@ spring:
       connection-test-query: SELECT 1
       validation-timeout: 1000
       isolate-internal-queries: true
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss:SSS
-    time-zone: GMT+8
+#设置最大可上传文件大小
+  servlet:
+      multipart:
+        max-file-size: 1000MB
+        max-request-size: 1000MB
+
+download:
+  file-path: file-operation/download-file/images/zuul.png
+upload:
+   upload-path: file-operation/upload-file/images
