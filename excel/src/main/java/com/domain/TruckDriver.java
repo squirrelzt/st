@@ -7,24 +7,24 @@ import lombok.Data;
 @Data
 public class TruckDriver extends BaseRowModel {
 
-    @ExcelProperty(index = 0)
+    @ExcelProperty(value = "车牌号", index = 0)
     private String truckNumber;
 
-    @ExcelProperty(index = 1)
+    @ExcelProperty(value = "挂车号", index = 1)
     private String traileNumber;
 
-    @ExcelProperty(index = 2)
+    @ExcelProperty(value = "司机姓名", index = 2)
     private String driverName;
 
-    @ExcelProperty(index = 3)
+    @ExcelProperty(value = "身份证号", index = 3)
     private String driverIdCard;
 
-    @ExcelProperty(index = 4)
+    @ExcelProperty(value = "手机号码", index = 4)
     private String driverMobile;
 
-    @ExcelProperty(index = 5)
+    @ExcelProperty(value = "单车提货量（吨）", index = 5)
     private String planQuantity;
 
-    @ExcelProperty(index = 6)
+    @ExcelProperty(value = "允许提货次数", index = 6)
     private String limitNum;
 }

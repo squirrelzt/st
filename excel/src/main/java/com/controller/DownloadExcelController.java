@@ -3,9 +3,12 @@ package com.controller;
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.BaseRowModel;
+import com.alibaba.excel.metadata.Font;
 import com.alibaba.excel.metadata.Sheet;
+import com.alibaba.excel.metadata.TableStyle;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.domain.TruckDriver;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -53,7 +56,19 @@ public class DownloadExcelController {
 //        String fileName = new String(("UserInfo " + new SimpleDateFormat("yyyy-MM-dd").format(new Date()))
 //                .getBytes(), "UTF-8");
         Sheet sheet1 = new Sheet(1, 0, TruckDriver.class);
+        TableStyle tableStyle = new TableStyle();
+        tableStyle.setTableHeadBackGroundColor(IndexedColors.YELLOW);
+        Font font = new Font();
+        font.setFontHeightInPoints((short)12);
+        tableStyle.setTableContentFont(font);
+        Font headFont = new Font();
+        headFont.setBold(true);
+        headFont.setFontHeightInPoints((short)10);
+        tableStyle.setTableHeadFont(headFont);
+        tableStyle.setTableContentBackGroundColor(IndexedColors.WHITE);
+        sheet1.setTableStyle(tableStyle);
         sheet1.setSheetName("sheet");
+//        sheet1.setHeadLineMun();
 //        writer.write0(getListString(), sheet1);
 
         List<TruckDriver> data = getData();
