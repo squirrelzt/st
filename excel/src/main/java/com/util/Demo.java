@@ -1,9 +1,13 @@
 package com.util;
 
 import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.context.AnalysisContext;
+import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.metadata.BaseRowModel;
 import com.alibaba.excel.metadata.Sheet;
+import com.alibaba.excel.support.ExcelTypeEnum;
 import com.domain.TruckDriver;
 
 import java.io.*;
@@ -14,7 +18,9 @@ import java.util.Map;
 
 public class Demo {
     public static void main(String[] args) throws IOException {
-        write();
+//        write();
+//        read();
+        read2003();
     }
 
     public static void write() throws IOException {
@@ -61,10 +67,35 @@ public class Demo {
     }
 
     public static void read() throws FileNotFoundException {
-        File file = new File("E:" + File.separator + "two.xlsx");
+        File file = new File("E:" + File.separator + "222.xls");
         InputStream inputStream = new FileInputStream(file);
         List<Object> data = EasyExcelFactory.read(inputStream, new Sheet(1, 1, TruckDriver.class));
         System.out.println(data.size());
         System.out.println(data);
+    }
+
+    public static void read2003() throws FileNotFoundException {
+        List<Object> list =  new ArrayList<>();
+        File file = new File("E:" + File.separator + "222.xls");
+        InputStream inputStream = new FileInputStream(file);
+        AnalysisEventListener listener = new AnalysisEventListener() {
+            @Override
+            public void invoke(Object object, AnalysisContext analysisContext) {
+                System.out.println("当前行："+analysisContext.getCurrentRowNum());
+                System.out.println(object);
+                list.add(object);
+            }
+
+            @Override
+            public void doAfterAllAnalysed(AnalysisContext analysisContext) {
+
+            }
+        };
+        ExcelReader excelReader = new ExcelReader(inputStream, ExcelTypeEnum.XLS, null, listener);
+        excelReader.read();
+//        List<Object> data = EasyExcelFactory.read(inputStream, new Sheet(1, 1, TruckDriver.class));
+//        System.out.println(data.size());
+//        System.out.println(data);
+        System.out.println(list);
     }
 }
