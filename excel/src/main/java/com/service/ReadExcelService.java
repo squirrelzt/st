@@ -3,6 +3,7 @@ package com.service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 类名称: ReadExcelService
@@ -18,5 +19,5 @@ public interface ReadExcelService {
      * @return 文件内容
      * @throws IOException 异常
      */
-    Object readExcel2007(MultipartFile file) throws IOException;
+    List<Object> readExcel2007(MultipartFile file) throws IOException;
 }

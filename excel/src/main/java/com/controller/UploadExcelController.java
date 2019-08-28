@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 类名称: UploadExcelController
@@ -32,12 +33,12 @@ public class UploadExcelController {
      * @return 文件内容
      */
     @RequestMapping("/excel2007")
-    public Object uploadExcel2007(@RequestParam("uploadFile") MultipartFile file) {
+    public List<Object> uploadExcel2007(@RequestParam("uploadFile") MultipartFile file) {
         try {
             return readExcelService.readExcel2007(file);
         } catch (IOException e) {
             log.error("", e);
-            return "error";
+            return null;
         }
     }
 }

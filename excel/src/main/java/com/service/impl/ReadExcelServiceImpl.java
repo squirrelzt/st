@@ -24,16 +24,16 @@ import java.util.List;
 public class ReadExcelServiceImpl implements ReadExcelService {
 
     @Override
-    public Object readExcel2007(MultipartFile file) throws IOException{
+    public List<Object> readExcel2007(MultipartFile file) throws IOException{
         InputStream inputStream = file.getInputStream();
         // 表格序号
         int sheetNo = 1;
         // 从第2行开始读取，第1行为表头
         int headLineMun = 1;
         Sheet sheet = new Sheet(sheetNo, headLineMun, TruckDriver.class);
-        List<Object> data = EasyExcelFactory.read(inputStream, sheet);
+        List<Object> list = EasyExcelFactory.read(inputStream, sheet);
         log.info("------------------------");
-        log.info(JSON.toJSONString(data));
-        return data;
+        log.info(JSON.toJSONString(list));
+        return list;
     }
 }
