@@ -11,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 类名称: ReadExcelServiceImpl
@@ -34,6 +36,28 @@ public class ReadExcelServiceImpl implements ReadExcelService {
         List<Object> list = EasyExcelFactory.read(inputStream, sheet);
         log.info("------------------------");
         log.info(JSON.toJSONString(list));
+        return removeDuplicate(list);
+    }
+
+    private List<Object> removeDuplicate(List<Object> originList) {
+        List<Object> list = new ArrayList<>();
+        if (!originList.isEmpty()) {
+            for (Object obj: originList) {
+                TruckDriver model = (TruckDriver)obj;
+                String truckNumber = model.getTruckNumber();
+                String traileNumber = model.getTraileNumber();
+                String driverName = model.getDriverName();
+                String driverIdCard = model.getDriverIdCard();
+                String driverMobile = model.getDriverMobile();
+                String planQuantity = model.getPlanQuantity();
+                String limitNum = model.getLimitNum();
+                if (Objects.isNull(truckNumber) && Objects.isNull(traileNumber) && Objects.isNull(driverName) && Objects.isNull(driverIdCard) && Objects.isNull(driverMobile) && Objects.isNull(planQuantity) && Objects.isNull(limitNum)) {
+
+                } else {
+                    list.add(model);
+                }
+            }
+        }
         return list;
     }
 }
