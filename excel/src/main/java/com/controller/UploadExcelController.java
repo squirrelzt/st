@@ -41,4 +41,23 @@ public class UploadExcelController {
             return null;
         }
     }
+
+    @RequestMapping("/excel2003")
+    public List<Object> uploadExcel2003(@RequestParam("uploadFile") MultipartFile file) {
+        try {
+            return readExcelService.readExcel2003(file);
+        } catch (IOException e) {
+            log.error("", e);
+            return null;
+        }
+    }
+
+//    @RequestMapping("/excel")
+//    public List<Object> uploadExcel(@RequestParam("uploadFile") MultipartFile file) {
+//        try {
+//            EasyExcel.read(file.getInputStream(), TruckDriver.class, new UploadDataListener()).sheet().doRead();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

@@ -20,4 +20,13 @@ public interface ReadExcelService {
      * @throws IOException 异常
      */
     List<Object> readExcel2007(MultipartFile file) throws IOException;
+
+    /**
+     * 读取2003 xls
+     * @param file 上传文件
+     * @return 文件内容
+     * @throws IOException 异常
+     */
+    List<Object> readExcel2003(MultipartFile file) throws IOException;
+
 }
