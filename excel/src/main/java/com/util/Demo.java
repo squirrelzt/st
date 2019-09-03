@@ -6,9 +6,12 @@ import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.metadata.BaseRowModel;
+import com.alibaba.excel.metadata.Font;
 import com.alibaba.excel.metadata.Sheet;
+import com.alibaba.excel.metadata.TableStyle;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.domain.TruckDriver;
+import org.apache.poi.ss.usermodel.IndexedColors;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,9 +21,9 @@ import java.util.Map;
 
 public class Demo {
     public static void main(String[] args) throws IOException {
-//        write();
+        write();
 //        read();
-        read2003();
+//        read2003();
     }
 
     public static void write() throws IOException {
@@ -29,6 +32,16 @@ public class Demo {
         //写第一个sheet, sheet1  数据全是List<String> 无模型映射关系
         Sheet sheet1 = new Sheet(1, 3, TruckDriver.class);
         sheet1.setSheetName("第一个sheet");
+        TableStyle tableStyle = new TableStyle();
+        tableStyle.setTableHeadBackGroundColor(IndexedColors.WHITE);
+        tableStyle.setTableContentBackGroundColor(IndexedColors.WHITE);
+        Font font = new Font();
+        font.setBold(Boolean.FALSE);
+        font.setFontHeightInPoints((short)9);
+
+        tableStyle.setTableContentFont(font);
+        tableStyle.setTableHeadFont(font);
+        sheet1.setTableStyle(tableStyle);
 
         //设置列宽 设置每列的宽度
         Map columnWidth = new HashMap();

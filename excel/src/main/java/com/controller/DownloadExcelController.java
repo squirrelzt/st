@@ -95,7 +95,7 @@ public class DownloadExcelController {
         truckDriver1.setDriverIdCard("130612198501011001");
         truckDriver1.setDriverMobile("19012345601");
         truckDriver1.setPlanQuantity("1.101");
-        truckDriver1.setLimitNum("1");
+        truckDriver1.setLimitNum("2019-08-05 14:28:43");
         list.add(truckDriver1);
 
         TruckDriver truckDriver2 = new TruckDriver();

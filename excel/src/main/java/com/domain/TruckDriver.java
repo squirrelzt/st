@@ -25,6 +25,6 @@ public class TruckDriver extends BaseRowModel {
     @ExcelProperty(value = "单车提货量（吨）", index = 5)
     private String planQuantity;
 
-    @ExcelProperty(value = "允许提货次数", index = 6)
+    @ExcelProperty(value = "允许提货次数", index = 6, format = "yyyy-MM-dd HH:mm:ss")
     private String limitNum;
 }

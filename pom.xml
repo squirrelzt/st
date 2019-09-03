@@ -13,6 +13,7 @@
 		<module>actuator</module>
         <module>file-operation</module>
         <module>excel</module>
+        <module>easy-excel</module>
     </modules>
 	<packaging>pom</packaging>
 
