@@ -20,16 +20,19 @@ public class UploadController {
 
     @RequestMapping("/excel")
     public List uploadExcel(@RequestParam("uploadFile")MultipartFile file) {
+        List<TruckDriver> list = null;
         try {
 //            ExcelReaderBuilder builder = EasyExcel.read(file.getInputStream());
 //            builder.headRowNumber(1);
 //            ExcelReaderSheetBuilder sheetBuilder = builder.sheet();
 //            ReadSheet readSheet = sheetBuilder.build();
 //            readSheet.getCustomConverterList();
-            EasyExcel.read(file.getInputStream(), TruckDriver.class, new TruckDriverListener()).sheet().doRead();
+            TruckDriverListener listener = new TruckDriverListener();
+            EasyExcel.read(file.getInputStream(), TruckDriver.class, listener).sheet().doRead();
+            list =listener.getData();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return list;
     }
 }
