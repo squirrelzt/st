@@ -6,6 +6,7 @@ import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.domain.TransactionDTO;
+import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,11 +32,16 @@ public class DownloadController {
         // 背景设置为红色
         headWriteCellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
         WriteFont headWriteFont = new WriteFont();
+        headWriteFont.setFontName(HSSFFont.FONT_ARIAL);
         headWriteFont.setFontHeightInPoints((short)9);
         headWriteFont.setBold(Boolean.FALSE);
         headWriteCellStyle.setWriteFont(headWriteFont);
 //        headWriteCellStyle.setBottomBorderColor(HSSFColor.toHSSFColor(Color).index);
+//        headWriteCellStyle.setBorderBottom(BorderStyle.NONE);
+        headWriteCellStyle.setTopBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
+        headWriteCellStyle.setRightBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
         headWriteCellStyle.setBottomBorderColor(HSSFColor.HSSFColorPredefined.GREEN.getIndex());
+        headWriteCellStyle.setLeftBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
 // 内容的策略
         WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
         // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND 不然无法显示背景颜色.头默认了 FillPatternType所以可以不指定
@@ -43,6 +49,7 @@ public class DownloadController {
         // 背景颜色
         contentWriteCellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
         WriteFont contentWriteFont = new WriteFont();
+        contentWriteFont.setFontName(HSSFFont.FONT_ARIAL);
         // 字体大小
         contentWriteFont.setFontHeightInPoints((short)9);
         contentWriteFont.setBold(Boolean.FALSE);
@@ -50,11 +57,15 @@ public class DownloadController {
         contentWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
         contentWriteCellStyle.setBorderBottom(BorderStyle.THIN);
         contentWriteCellStyle.setBorderRight(BorderStyle.THIN);
-//        contentWriteCellStyle.setBorderLeft(BorderStyle.THIN);
-        // 这个策略是 头是头的样式 内容是内容的样式 其他的策略可以自己实现
+        contentWriteCellStyle.setBorderLeft(BorderStyle.THIN);
+        contentWriteCellStyle.setBorderTop(BorderStyle.THIN);
+        contentWriteCellStyle.setTopBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
+        contentWriteCellStyle.setRightBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
+        contentWriteCellStyle.setBottomBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
+        contentWriteCellStyle.setLeftBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
         HorizontalCellStyleStrategy horizontalCellStyleStrategy =
                 new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
-        LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 0);
+//        LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 0);
         EasyExcel.write(response.getOutputStream(), TransactionDTO.class).registerWriteHandler(horizontalCellStyleStrategy).sheet("模板").doWrite(getData());
 
     }
