@@ -3,14 +3,19 @@ package com.squirrel.st.mapper;
 import com.squirrel.st.domain.Account;
 import com.squirrel.st.domain.AccountExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
+
+@Mapper
+@Repository
 public interface AccountMapper {
     long countByExample(AccountExample example);
 
     int deleteByExample(AccountExample example);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Account record);
 
@@ -18,7 +23,7 @@ public interface AccountMapper {
 
     List<Account> selectByExample(AccountExample example);
 
-    Account selectByPrimaryKey(Long id);
+    Account selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") Account record, @Param("example") AccountExample example);
 
