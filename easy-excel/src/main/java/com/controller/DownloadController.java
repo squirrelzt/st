@@ -6,6 +6,7 @@ import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.domain.TransactionDTO;
+import com.listener.MyMergeStrategy;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
@@ -65,8 +66,13 @@ public class DownloadController {
         contentWriteCellStyle.setLeftBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
         HorizontalCellStyleStrategy horizontalCellStyleStrategy =
                 new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
-//        LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 0);
-        EasyExcel.write(response.getOutputStream(), TransactionDTO.class).registerWriteHandler(horizontalCellStyleStrategy).sheet("模板").doWrite(getData());
+        LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 0);
+        MyMergeStrategy strategy = new MyMergeStrategy(getData().size(), 17);
+
+        EasyExcel.write(response.getOutputStream(), TransactionDTO.class).registerWriteHandler(horizontalCellStyleStrategy)
+//                .registerWriteHandler(loopMergeStrategy)
+                .registerWriteHandler(strategy)
+                .sheet("模板").doWrite(getData());
 
     }
 
@@ -120,7 +126,7 @@ public class DownloadController {
         list.add(dto3);
 
         TransactionDTO dto4 = new TransactionDTO();
-        dto4.setSiteName("当前查出2条");
+        dto4.setId("当前查出2条");
         list.add(dto4);
 
         return list;

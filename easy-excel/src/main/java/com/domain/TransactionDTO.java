@@ -16,6 +16,7 @@ public class TransactionDTO {
     /**
      * id
      */
+    @ExcelProperty(index = 21, value = " ")
     private String ids;
     /**
      * 序号
@@ -141,4 +142,10 @@ public class TransactionDTO {
     @ColumnWidth(40)
     @ExcelProperty(index = 17, value = "备注")
     private String billMemo;
+
+    @ExcelProperty(index = 18, value = "  ")
+    private String hello;
+
+    @ExcelProperty(index = 19, value = " ")
+    private String world;
 }
