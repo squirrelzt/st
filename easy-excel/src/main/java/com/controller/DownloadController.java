@@ -6,6 +6,7 @@ import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.domain.TransactionDTO;
+import com.listener.DisplayColumnWriteHandler;
 import com.listener.MyMergeStrategy;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
@@ -67,11 +68,17 @@ public class DownloadController {
         HorizontalCellStyleStrategy horizontalCellStyleStrategy =
                 new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
         LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 0);
+        // 合并策略
         MyMergeStrategy strategy = new MyMergeStrategy(getData().size(), 17);
-
+        // 隐藏策略
+        List<Integer> hiddenColumnIndex = new ArrayList<>(2);
+        hiddenColumnIndex.add(18);
+        hiddenColumnIndex.add(19);
+        DisplayColumnWriteHandler displayColumnWriteHandler = new DisplayColumnWriteHandler(hiddenColumnIndex);
         EasyExcel.write(response.getOutputStream(), TransactionDTO.class).registerWriteHandler(horizontalCellStyleStrategy)
 //                .registerWriteHandler(loopMergeStrategy)
                 .registerWriteHandler(strategy)
+                .registerWriteHandler(displayColumnWriteHandler)
                 .sheet("模板").doWrite(getData());
 
     }
@@ -97,6 +104,8 @@ public class DownloadController {
         dto1.setCheckor("王晓明");
         dto1.setCheckDate("2019-06-20 19:14:31");
         dto1.setBillMemo("111111");
+        dto1.setSealFee("2222");
+        dto1.setLoadingCost("3333");
         list.add(dto1);
 
         TransactionDTO dto2 = new TransactionDTO();
@@ -118,6 +127,8 @@ public class DownloadController {
         dto2.setCheckor("王晓明");
         dto2.setCheckDate("2019-06-20 19:14:31");
         dto2.setBillMemo("222222");
+        dto2.setSealFee("666");
+        dto2.setLoadingCost("888");
         list.add(dto2);
 
         TransactionDTO dto3 = new TransactionDTO();
