@@ -1,7 +1,9 @@
 package com.controller;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.merge.LoopMergeStrategy;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +28,86 @@ public class DownloadController {
 
     @RequestMapping("/excel")
     public void download(HttpServletResponse response) throws IOException {
-        response.setContentType("application/vnd.ms-excel");
-        response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=demo.xlsx");
+        setResponse(response);
 
         // 头的策略
         WriteCellStyle headWriteCellStyle = new WriteCellStyle();
+        setHeader(headWriteCellStyle);
+
+        // 内容的策略
+        WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
+        setContent(contentWriteCellStyle);
+
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy =
+                new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
+        LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 0);
+        // 合并策略
+        MyMergeStrategy strategy = new MyMergeStrategy(getData().size(), 17);
+        // 隐藏策略
+        List<Integer> hiddenColumnIndex = new ArrayList<>(2);
+        hiddenColumnIndex.add(18);
+        hiddenColumnIndex.add(19);
+        DisplayColumnWriteHandler displayColumnWriteHandler = new DisplayColumnWriteHandler(hiddenColumnIndex);
+        EasyExcel.write(response.getOutputStream(), TransactionDTO.class).registerWriteHandler(horizontalCellStyleStrategy)
+//                .registerWriteHandler(loopMergeStrategy)
+                .registerWriteHandler(strategy)
+                .registerWriteHandler(displayColumnWriteHandler)
+                .sheet("模板").doWrite(getData());
+
+    }
+
+    @RequestMapping("/excel/multiSheet")
+    public void downloadMultiSheet(HttpServletResponse response) throws IOException{
+        setResponse(response);
+        // 头的策略
+        WriteCellStyle headWriteCellStyle = new WriteCellStyle();
+        setHeader(headWriteCellStyle);
+
+        // 内容的策略
+        WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
+        setContent(contentWriteCellStyle);
+
+        HorizontalCellStyleStrategy horizontalCellStyleStrategy =
+                new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
+        LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 0);
+        // 合并策略
+        MyMergeStrategy strategy = new MyMergeStrategy(getData().size(), 17);
+        // 隐藏策略
+        List<Integer> hiddenColumnIndex = new ArrayList<>(2);
+        hiddenColumnIndex.add(18);
+        hiddenColumnIndex.add(19);
+        DisplayColumnWriteHandler displayColumnWriteHandler = new DisplayColumnWriteHandler(hiddenColumnIndex);
+        ExcelWriter excelWriter = null;
+        try {
+            excelWriter = EasyExcel.write(response.getOutputStream(), TransactionDTO.class).build();
+            WriteSheet sheet1 = EasyExcel.writerSheet(0, "2020-01")
+                    .head(TransactionDTO.class)
+                    .registerWriteHandler(horizontalCellStyleStrategy)
+                    .build();
+            excelWriter.write(getData(), sheet1);
+
+            WriteSheet sheet2 = EasyExcel.writerSheet(1, "2020-02")
+                    .head(TransactionDTO.class)
+                    .registerWriteHandler(horizontalCellStyleStrategy)
+                    .build();
+            excelWriter.write(getData(), sheet2);
+        } catch (IOException e) {
+
+        } finally {
+            if (excelWriter != null) {
+                excelWriter.finish();
+            }
+        }
+
+    }
+
+    private void setResponse(HttpServletResponse response) {
+        response.setContentType("application/vnd.ms-excel");
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=demo.xlsx");
+    }
+
+    private void setHeader(WriteCellStyle headWriteCellStyle) {
         // 背景设置为红色
         headWriteCellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
         WriteFont headWriteFont = new WriteFont();
@@ -44,8 +121,9 @@ public class DownloadController {
         headWriteCellStyle.setRightBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
         headWriteCellStyle.setBottomBorderColor(HSSFColor.HSSFColorPredefined.GREEN.getIndex());
         headWriteCellStyle.setLeftBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
-// 内容的策略
-        WriteCellStyle contentWriteCellStyle = new WriteCellStyle();
+    }
+
+    private void setContent(WriteCellStyle contentWriteCellStyle) {
         // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND 不然无法显示背景颜色.头默认了 FillPatternType所以可以不指定
         contentWriteCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
         // 背景颜色
@@ -65,22 +143,6 @@ public class DownloadController {
         contentWriteCellStyle.setRightBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
         contentWriteCellStyle.setBottomBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
         contentWriteCellStyle.setLeftBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
-        HorizontalCellStyleStrategy horizontalCellStyleStrategy =
-                new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
-        LoopMergeStrategy loopMergeStrategy = new LoopMergeStrategy(2, 0);
-        // 合并策略
-        MyMergeStrategy strategy = new MyMergeStrategy(getData().size(), 17);
-        // 隐藏策略
-        List<Integer> hiddenColumnIndex = new ArrayList<>(2);
-        hiddenColumnIndex.add(18);
-        hiddenColumnIndex.add(19);
-        DisplayColumnWriteHandler displayColumnWriteHandler = new DisplayColumnWriteHandler(hiddenColumnIndex);
-        EasyExcel.write(response.getOutputStream(), TransactionDTO.class).registerWriteHandler(horizontalCellStyleStrategy)
-//                .registerWriteHandler(loopMergeStrategy)
-                .registerWriteHandler(strategy)
-                .registerWriteHandler(displayColumnWriteHandler)
-                .sheet("模板").doWrite(getData());
-
     }
 
     private List<TransactionDTO> getData() {
