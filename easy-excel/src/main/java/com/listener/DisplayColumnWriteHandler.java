@@ -25,27 +25,31 @@ public class DisplayColumnWriteHandler implements CellWriteHandler {
     }
 
     @Override
-    public void beforeCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row, Head head, int i, boolean b) {
+    public void beforeCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Row row, Head head, Integer integer, Integer integer1, Boolean aBoolean) {
 
     }
 
     @Override
-    public void afterCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, CellData cellData, Cell cell, Head head, int i, boolean b) {
-//        if (head.getColumnIndex() == 18 || head.getColumnIndex() == 19) {
-//            if (!Objects.isNull(cellData)) {
-//                cellData.setStringValue("");
-//            }
-//            cell.setCellValue("");
-//        }
+    public void afterCellCreate(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, Cell cell, Head head, Integer integer, Boolean aBoolean) {
         if (!hiddenColumnIndex.isEmpty()) {
             for (Integer index : hiddenColumnIndex) {
                 if (head.getColumnIndex().equals(index)) {
-                    if (!Objects.isNull(cellData)) {
-                        cellData.setStringValue("");
+                    if (!Objects.isNull(cell)) {
+                        cell.setCellValue("");
                     }
                     cell.setCellValue("");
                 }
             }
         }
+    }
+
+    @Override
+    public void afterCellDataConverted(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, CellData cellData, Cell cell, Head head, Integer integer, Boolean aBoolean) {
+
+    }
+
+    @Override
+    public void afterCellDispose(WriteSheetHolder writeSheetHolder, WriteTableHolder writeTableHolder, List<CellData> list, Cell cell, Head head, Integer integer, Boolean aBoolean) {
+
     }
 }

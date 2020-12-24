@@ -20,16 +20,16 @@ public class MyMergeStrategy extends AbstractMergeStrategy {
 
     public MyMergeStrategy() {}
 
-    public MyMergeStrategy(int mergeRowIndex, int columnLength) {
-        this.mergeRowIndex = mergeRowIndex;
-        this.columnLength = columnLength;
-    }
-
     @Override
-    protected void merge(Sheet sheet, Cell cell, Head head, int relativeRowIndex) {
-        if (relativeRowIndex == mergeRowIndex - 1 && head.getColumnIndex() == columnLength - 1) {
+    protected void merge(Sheet sheet, Cell cell, Head head, Integer integer) {
+        if (integer == mergeRowIndex - 1 && head.getColumnIndex() == columnLength - 1) {
             CellRangeAddress cellRangeAddress = new CellRangeAddress(mergeRowIndex, mergeRowIndex, 0, columnLength);
             sheet.addMergedRegion(cellRangeAddress);
         }
+    }
+
+    public MyMergeStrategy(int mergeRowIndex, int columnLength) {
+        this.mergeRowIndex = mergeRowIndex;
+        this.columnLength = columnLength;
     }
 }
