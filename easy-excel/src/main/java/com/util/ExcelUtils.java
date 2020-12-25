@@ -20,7 +20,7 @@ import java.io.IOException;
 public class ExcelUtils {
 
     public static void write(HttpServletResponse response, ExcelWriteItem item) throws IOException {
-        setResponse(response);
+        setResponse(response, item.getFilename());
 
         WriteCellStyle headerStyle = new WriteCellStyle();
         setHeaderStyle(headerStyle);
@@ -44,12 +44,21 @@ public class ExcelUtils {
         }
     }
 
-    private static void setResponse(HttpServletResponse response) {
+    /**
+     * 设置返回值类型和文件名
+     * @param response {@link HttpServletResponse}
+     * @param filename 文件名
+     */
+    private static void setResponse(HttpServletResponse response, String filename) {
         response.setContentType("application/vnd.ms-excel");
         response.setCharacterEncoding("utf-8");
-        response.setHeader("Content-disposition", "attachment;filename=demo.xlsx");
+        response.setHeader("Content-disposition", "attachment;filename=" + filename + ".xlsx");
     }
 
+    /**
+     * 设header样式
+     * @param headWriteCellStyle {@link WriteCellStyle}
+     */
     private static void setHeaderStyle(WriteCellStyle headWriteCellStyle) {
         // 背景设置为红色
         headWriteCellStyle.setFillForegroundColor(IndexedColors.WHITE.getIndex());
@@ -66,6 +75,10 @@ public class ExcelUtils {
         headWriteCellStyle.setLeftBorderColor(HSSFColor.HSSFColorPredefined.GREY_25_PERCENT.getIndex());
     }
 
+    /**
+     * 设置内容样式
+     * @param contentWriteCellStyle {@link WriteCellStyle}
+     */
     private static void setContentStyle(WriteCellStyle contentWriteCellStyle) {
         // 这里需要指定 FillPatternType 为FillPatternType.SOLID_FOREGROUND 不然无法显示背景颜色.头默认了 FillPatternType所以可以不指定
         contentWriteCellStyle.setFillPatternType(FillPatternType.SOLID_FOREGROUND);
