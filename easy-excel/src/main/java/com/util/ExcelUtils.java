@@ -1,21 +1,26 @@
 package com.util;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
 import com.domain.ExcelWriteItem;
+import com.domain.read.*;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.ResultSet;
 
 public class ExcelUtils {
 
@@ -42,6 +47,32 @@ public class ExcelUtils {
                 excelWriter.finish();
             }
         }
+    }
+
+    public static ReadItem read(MultipartFile file) throws IOException {
+        ReadItem result = new ReadItem();
+        ExcelReader excelReader = null;
+        try {
+            excelReader = EasyExcel.read(file.getInputStream()).build();
+            for (int i = 0; i < 2; i++) {
+                if (i == 0) {
+                    FirstSheetItemListener listener = new FirstSheetItemListener();
+                    ReadSheet readSheet = EasyExcel.readSheet(i).head(FirstSheetItem.class).registerReadListener(listener).build();
+                    excelReader.read(readSheet);
+                    result.setFirstSheetList(listener.getFirstSheetData());
+                } else if (i == 1) {
+                    SecondSheetItemListener listener = new SecondSheetItemListener();
+                    ReadSheet readSheet = EasyExcel.readSheet(i).head(SecondSheetItem.class).build();
+                    excelReader.read(readSheet);
+                    result.setSecondSheetList(listener.getSecondSheetData());
+                }
+            }
+        } finally {
+            if (excelReader != null) {
+                excelReader.finish();
+            }
+        }
+        return result;
     }
 
     /**

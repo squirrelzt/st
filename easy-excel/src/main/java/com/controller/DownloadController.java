@@ -7,18 +7,22 @@ import com.alibaba.excel.write.metadata.WriteSheet;
 import com.alibaba.excel.write.metadata.style.WriteCellStyle;
 import com.alibaba.excel.write.metadata.style.WriteFont;
 import com.alibaba.excel.write.style.HorizontalCellStyleStrategy;
+import com.domain.ExcelWriteItem;
 import com.domain.TransactionDTO;
+import com.domain.write.FirstSheetWriteItem;
+import com.domain.write.SecondSheetWriteItem;
 import com.listener.DisplayColumnWriteHandler;
 import com.listener.MyMergeStrategy;
+import com.util.ExcelUtils;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -202,6 +206,78 @@ public class DownloadController {
         dto4.setId("当前查出2条");
         list.add(dto4);
 
+        return list;
+    }
+
+    @GetMapping("/demo")
+    public void downloadDemo(HttpServletResponse response) throws IOException {
+        ExcelUtils.write(response, getDownloadDemoData());
+    }
+
+    public ExcelWriteItem getDownloadDemoData() {
+        ExcelWriteItem data = new ExcelWriteItem();
+        data.setFilename("demo");
+        List<ExcelWriteItem.ExcelSheet> list = new ArrayList<>();
+        data.setExcelSheet(list);
+
+        ExcelWriteItem.ExcelSheet sheet1 = new ExcelWriteItem.ExcelSheet();
+        sheet1.setSheetName("学校");
+        sheet1.setSheetNo(0);
+        sheet1.setHeadClazz(FirstSheetWriteItem.class);
+        sheet1.setData(getFirstSheetData());
+        list.add(sheet1);
+
+        ExcelWriteItem.ExcelSheet sheet2 = new ExcelWriteItem.ExcelSheet();
+        sheet2.setSheetNo(1);
+        sheet2.setSheetName("公司");
+        sheet2.setHeadClazz(SecondSheetWriteItem.class);
+        sheet2.setData(getSecondSheetData());
+        list.add(sheet2);
+        return data;
+    }
+
+    private List<FirstSheetWriteItem> getFirstSheetData() {
+        List<FirstSheetWriteItem> list = new ArrayList<>();
+        FirstSheetWriteItem item1 = new FirstSheetWriteItem();
+        item1.setId("1");
+        item1.setName("tom");
+        item1.setSchool("qinghua");
+        list.add(item1);
+
+        FirstSheetWriteItem item2 = new FirstSheetWriteItem();
+        item2.setId("2");
+        item2.setName("jake");
+        item2.setSchool("beida");
+        list.add(item2);
+
+        FirstSheetWriteItem item3 = new FirstSheetWriteItem();
+        item3.setId("3");
+        item3.setName("jane");
+        item3.setSchool("fudan");
+        list.add(item3);
+
+        return list;
+    }
+
+    private List<SecondSheetWriteItem> getSecondSheetData() {
+        List<SecondSheetWriteItem> list = new ArrayList();
+        SecondSheetWriteItem item1 = new SecondSheetWriteItem();
+        item1.setId("1");
+        item1.setName("zhangsan");
+        item1.setCompany("alibaba");
+        list.add(item1);
+
+        SecondSheetWriteItem item2 = new SecondSheetWriteItem();
+        item2.setId("2");
+        item2.setName("lisi");
+        item2.setCompany("tengcent");
+        list.add(item2);
+
+        SecondSheetWriteItem item3 = new SecondSheetWriteItem();
+        item3.setId("3");
+        item3.setName("wangwu");
+        item3.setCompany("baidu");
+        list.add(item3);
         return list;
     }
 }
