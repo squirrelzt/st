@@ -29,3 +29,8 @@ my:
   param:
     one-url: http://baidu.com
     two-url: http://qq.com
+
+test:
+  new:
+    one-param: demo1
+    two-param: demo2
