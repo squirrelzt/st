@@ -24,3 +24,8 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss:SSS
     time-zone: GMT+8
+
+my:
+  param:
+    one-url: http://baidu.com
+    two-url: http://qq.com
