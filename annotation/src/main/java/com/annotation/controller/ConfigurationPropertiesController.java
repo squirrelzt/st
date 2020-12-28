@@ -2,6 +2,7 @@ package com.annotation.controller;
 
 import com.annotation.common.ParamConfigurationProperties;
 import com.annotation.common.TestConfiguraionProperties;
+import com.annotation.common.TestConfigurationPropertes1;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,8 @@ public class ConfigurationPropertiesController {
     ParamConfigurationProperties paramConfigurationProperties;
     @Autowired
     TestConfiguraionProperties testConfiguraionProperties;
+    @Autowired
+    TestConfigurationPropertes1 testConfigurationPropertes1;
 
     @GetMapping
     public Object getProperties() {
@@ -24,6 +27,9 @@ public class ConfigurationPropertiesController {
         log.info("----------------");
         log.info(testConfiguraionProperties.getOneParam());
         log.info(testConfiguraionProperties.getTwoParam());
+        log.info("================");
+        log.info(testConfigurationPropertes1.getOne());
+        log.info(testConfigurationPropertes1.getTwo());
         return paramConfigurationProperties;
     }
 }

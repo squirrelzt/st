@@ -34,3 +34,8 @@ test:
   new:
     one-param: demo1
     two-param: demo2
+
+param:
+  test:
+    one: test1
+    two: test2
